@@ -1,0 +1,29 @@
+name: latent_AutoEncoder
+suffix: ~  # add suffix to saved images
+model: latent
+distortion: mixed
+gpu_ids: [1]
+
+datasets:
+  test1:
+    name: AutoEncoder
+    mode: XYLQGT
+    dataroot_X_GT: 
+    dataroot_X_LQ: 
+    dataroot_Y_GT: 
+    dataroot_Y_LQ: 
+
+#### network structures
+network_AE:
+  which_model: UNet
+  setting:
+    in_ch: 3
+    out_ch: 3
+    ch: 8
+    ch_mult: [4, 8, 8, 16]
+    embed_dim: 8
+
+#### path
+path:
+  pretrain_model_AE: 
+

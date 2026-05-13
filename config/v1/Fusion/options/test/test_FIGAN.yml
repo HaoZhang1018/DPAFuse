@@ -1,0 +1,68 @@
+#### general settings
+name: test
+model: FIGAN
+distortion: mixed
+gpu_ids: [1]
+
+#### datasets
+datasets:
+  test:
+    name: test
+    mode: AutoXY
+    dataroot_X: ./dataset/test/X
+    dataroot_Y: ./dataset/test/Y
+    batch_size: 1
+    color: RGB
+
+#### network structures
+network_RE:
+  which_model: RENet
+  setting:
+    img_channel: 8
+    width: 64
+    enc_blk_nums: [1, 1, 1, 28]
+    middle_blk_num: 1
+    dec_blk_nums: [1, 1, 1, 1]
+
+network_AE:
+  which_model: UNet
+  setting:
+    in_ch: 3
+    out_ch: 3
+    ch: 8
+    ch_mult: [4, 8, 8, 16]
+    embed_dim: 8
+
+network_Fusion:
+  which_model: FusionNet
+  setting:
+    in_channels: 16
+    model_channels: 64
+    out_channels: 8
+
+network_D_fea:
+  which_model: Discriminator_Fea
+  setting:
+    input_channel: 8
+    num_filters_last: 64
+    n_layers: 3
+
+network_D_img:
+  which_model: Discriminator_Img
+  setting:
+    input_channel: 3
+    num_filters_last: 64
+    n_layers: 3
+
+#### path
+path:
+  pretrain_model_RE_X: pretrained_models/RE_VIS.pth
+  pretrain_model_RE_Y: pretrained_models/RE_IR.pth
+  pretrain_model_AE: pretrained_models/AutoEncoder.pth
+  pretrain_model_Fusion: pretrained_models/Fusion.pth
+  strict_load: true
+  resume_state:
+
+#### logger
+logger:
+  print_freq: 1

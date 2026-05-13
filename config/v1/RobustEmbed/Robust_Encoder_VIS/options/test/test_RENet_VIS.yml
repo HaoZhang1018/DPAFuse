@@ -1,0 +1,37 @@
+name: RobustEncoder
+suffix: ~  # add suffix to saved images
+model: RENet
+distortion: mixed
+gpu_ids: [0]
+
+
+datasets:
+  test1:
+    name: test
+    mode: AutoLQGT
+    dataroot_LQ: ./datasets/test/LQ
+    dataroot_GT: ./datasets/test/GT
+#### network structures
+network_RE:
+  which_model: RENet
+  setting:
+    img_channel: 8
+    width: 64
+    enc_blk_nums: [1, 1, 1, 28]
+    middle_blk_num: 1
+    dec_blk_nums: [1, 1, 1, 1]
+
+network_AE:
+  which_model: UNet
+  setting:
+    in_ch: 3
+    out_ch: 3
+    ch: 8
+    ch_mult: [4, 8, 8, 16]
+    embed_dim: 8
+
+#### path
+path:
+  pretrain_model_RE: 
+  pretrain_model_AE: 
+  
